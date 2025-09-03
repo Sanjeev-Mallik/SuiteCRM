@@ -1,0 +1,35 @@
+import { AppStateStore } from "../../../../store/app-state/app-state.store";
+import { UserPreferenceStore } from "../../../../store/user-preference/user-preference.store";
+import { LocalStorageService } from "../../../../services/local-storage/local-storage.service";
+import { Subscription } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+import { RecordPaginationModel } from "./record-pagination.model";
+import { Pagination } from "../../../../common/views/list/list-navigation.model";
+import { ObjectMap } from "../../../../common/types/object-map";
+import { Record } from "../../../../common/record/record.model";
+import * as i0 from "@angular/core";
+export declare class RecordPaginationService {
+    protected localStorageService: LocalStorageService;
+    protected preferences: UserPreferenceStore;
+    protected appStateStore: AppStateStore;
+    protected route: ActivatedRoute;
+    private nextRecordSubject;
+    nextRecord$: import("rxjs").Observable<boolean>;
+    paginationType: string;
+    protected subs: Subscription[];
+    constructor(localStorageService: LocalStorageService, preferences: UserPreferenceStore, appStateStore: AppStateStore, route: ActivatedRoute);
+    triggerNextRecord(value: boolean): void;
+    updateRecordListLocalStorage(records: Record[], pagination: Pagination): void;
+    updatePaginationLocalStorage(pagination: Pagination): void;
+    protected savePreference(module: string, storageKey: string, value: any): void;
+    protected getPreferenceKey(storageKey: string): string;
+    mapRecordIds(records: Record[]): ObjectMap[];
+    getModule(): string;
+    getTotalRecords(): number;
+    checkRecordValid(recordId: string): boolean;
+    getPageSize(): number;
+    getOffsetFromUrl(): number;
+    getRecordPaginationObj(module: string): RecordPaginationModel;
+    static ɵfac: i0.ɵɵFactoryDeclaration<RecordPaginationService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<RecordPaginationService>;
+}

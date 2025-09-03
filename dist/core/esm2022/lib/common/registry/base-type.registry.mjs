@@ -1,0 +1,63 @@
+/**
+ * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
+ * Copyright (C) 2024 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SALESAGILITY, SALESAGILITY DISCLAIMS THE
+ * WARRANTY OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License
+ * version 3, these Appropriate Legal Notices must retain the display of the
+ * "Supercharged by SuiteCRM" logo. If the display of the logos is not reasonably
+ * feasible for technical reasons, the Appropriate Legal Notices must display
+ * the words "Supercharged by SuiteCRM".
+ */
+import { OverridableMap } from "../types/overridable-map";
+export class BaseTypeRegistry {
+    constructor() {
+        this.init();
+    }
+    getKey(module, type) {
+        return type;
+    }
+    register(module, type, objectType) {
+        this.map.addEntry(module, this.getKey(module, type), objectType);
+    }
+    exclude(module, key) {
+        this.map.excludeEntry(module, key);
+    }
+    get(module, type) {
+        const objectTypes = this.map.getGroupEntries(module);
+        let key = this.getKey(module, type);
+        if (objectTypes[key]) {
+            return objectTypes[key];
+        }
+        if (objectTypes['default']) {
+            return objectTypes['default'];
+        }
+        return null;
+    }
+    has(module, type) {
+        const objectTypes = this.map.getGroupEntries(module);
+        const key = this.getKey(module, type);
+        return !!objectTypes[key];
+    }
+    init() {
+        this.map = new OverridableMap();
+        this.initDefault();
+    }
+    initDefault() {
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmFzZS10eXBlLnJlZ2lzdHJ5LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vY29yZS9hcHAvY29yZS9zcmMvbGliL2NvbW1vbi9yZWdpc3RyeS9iYXNlLXR5cGUucmVnaXN0cnkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztHQXdCRztBQUlILE9BQU8sRUFBQyxjQUFjLEVBQUMsTUFBTSwwQkFBMEIsQ0FBQztBQUV4RCxNQUFNLE9BQWdCLGdCQUFnQjtJQUdsQztRQUNJLElBQUksQ0FBQyxJQUFJLEVBQUUsQ0FBQztJQUNoQixDQUFDO0lBRU0sTUFBTSxDQUFDLE1BQWMsRUFBRSxJQUFZO1FBQ3RDLE9BQU8sSUFBSSxDQUFDO0lBQ2hCLENBQUM7SUFFTSxRQUFRLENBQUMsTUFBYyxFQUFFLElBQVksRUFBRSxVQUFtQjtRQUM3RCxJQUFJLENBQUMsR0FBRyxDQUFDLFFBQVEsQ0FBQyxNQUFNLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxNQUFNLEVBQUUsSUFBSSxDQUFDLEVBQUUsVUFBVSxDQUFDLENBQUM7SUFDckUsQ0FBQztJQUVNLE9BQU8sQ0FBQyxNQUFjLEVBQUUsR0FBVztRQUN0QyxJQUFJLENBQUMsR0FBRyxDQUFDLFlBQVksQ0FBQyxNQUFNLEVBQUUsR0FBRyxDQUFDLENBQUM7SUFDdkMsQ0FBQztJQUVNLEdBQUcsQ0FBQyxNQUFjLEVBQUUsSUFBWTtRQUNuQyxNQUFNLFdBQVcsR0FBRyxJQUFJLENBQUMsR0FBRyxDQUFDLGVBQWUsQ0FBQyxNQUFNLENBQUMsQ0FBQztRQUVyRCxJQUFJLEdBQUcsR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLE1BQU0sRUFBRSxJQUFJLENBQUMsQ0FBQztRQUNwQyxJQUFJLFdBQVcsQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDO1lBQ25CLE9BQU8sV0FBVyxDQUFDLEdBQUcsQ0FBQyxDQUFDO1FBQzVCLENBQUM7UUFFRCxJQUFJLFdBQVcsQ0FBQyxTQUFTLENBQUMsRUFBRSxDQUFDO1lBQ3pCLE9BQU8sV0FBVyxDQUFDLFNBQVMsQ0FBQyxDQUFDO1FBQ2xDLENBQUM7UUFFRCxPQUFPLElBQUksQ0FBQztJQUNoQixDQUFDO0lBRU0sR0FBRyxDQUFDLE1BQWMsRUFBRSxJQUFZO1FBRW5DLE1BQU0sV0FBVyxHQUFHLElBQUksQ0FBQyxHQUFHLENBQUMsZUFBZSxDQUFDLE1BQU0sQ0FBQyxDQUFDO1FBRXJELE1BQU0sR0FBRyxHQUFHLElBQUksQ0FBQyxNQUFNLENBQUMsTUFBTSxFQUFFLElBQUksQ0FBQyxDQUFDO1FBQ3RDLE9BQU8sQ0FBQyxDQUFDLFdBQVcsQ0FBQyxHQUFHLENBQUMsQ0FBQztJQUM5QixDQUFDO0lBRVMsSUFBSTtRQUNWLElBQUksQ0FBQyxHQUFHLEdBQUcsSUFBSSxjQUFjLEVBQVcsQ0FBQztRQUV6QyxJQUFJLENBQUMsV0FBVyxFQUFFLENBQUM7SUFDdkIsQ0FBQztJQUVTLFdBQVc7SUFDckIsQ0FBQztDQUNKIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBTdWl0ZUNSTSBpcyBhIGN1c3RvbWVyIHJlbGF0aW9uc2hpcCBtYW5hZ2VtZW50IHByb2dyYW0gZGV2ZWxvcGVkIGJ5IFNhbGVzQWdpbGl0eSBMdGQuXG4gKiBDb3B5cmlnaHQgKEMpIDIwMjQgU2FsZXNBZ2lsaXR5IEx0ZC5cbiAqXG4gKiBUaGlzIHByb2dyYW0gaXMgZnJlZSBzb2Z0d2FyZTsgeW91IGNhbiByZWRpc3RyaWJ1dGUgaXQgYW5kL29yIG1vZGlmeSBpdCB1bmRlclxuICogdGhlIHRlcm1zIG9mIHRoZSBHTlUgQWZmZXJvIEdlbmVyYWwgUHVibGljIExpY2Vuc2UgdmVyc2lvbiAzIGFzIHB1Ymxpc2hlZCBieSB0aGVcbiAqIEZyZWUgU29mdHdhcmUgRm91bmRhdGlvbiB3aXRoIHRoZSBhZGRpdGlvbiBvZiB0aGUgZm9sbG93aW5nIHBlcm1pc3Npb24gYWRkZWRcbiAqIHRvIFNlY3Rpb24gMTUgYXMgcGVybWl0dGVkIGluIFNlY3Rpb24gNyhhKTogRk9SIEFOWSBQQVJUIE9GIFRIRSBDT1ZFUkVEIFdPUktcbiAqIElOIFdISUNIIFRIRSBDT1BZUklHSFQgSVMgT1dORUQgQlkgU0FMRVNBR0lMSVRZLCBTQUxFU0FHSUxJVFkgRElTQ0xBSU1TIFRIRVxuICogV0FSUkFOVFkgT0YgTk9OIElORlJJTkdFTUVOVCBPRiBUSElSRCBQQVJUWSBSSUdIVFMuXG4gKlxuICogVGhpcyBwcm9ncmFtIGlzIGRpc3RyaWJ1dGVkIGluIHRoZSBob3BlIHRoYXQgaXQgd2lsbCBiZSB1c2VmdWwsIGJ1dCBXSVRIT1VUXG4gKiBBTlkgV0FSUkFOVFk7IHdpdGhvdXQgZXZlbiB0aGUgaW1wbGllZCB3YXJyYW50eSBvZiBNRVJDSEFOVEFCSUxJVFkgb3IgRklUTkVTU1xuICogRk9SIEEgUEFSVElDVUxBUiBQVVJQT1NFLiBTZWUgdGhlIEdOVSBBZmZlcm8gR2VuZXJhbCBQdWJsaWMgTGljZW5zZSBmb3IgbW9yZVxuICogZGV0YWlscy5cbiAqXG4gKiBZb3Ugc2hvdWxkIGhhdmUgcmVjZWl2ZWQgYSBjb3B5IG9mIHRoZSBHTlUgQWZmZXJvIEdlbmVyYWwgUHVibGljIExpY2Vuc2VcbiAqIGFsb25nIHdpdGggdGhpcyBwcm9ncmFtLiAgSWYgbm90LCBzZWUgPGh0dHA6Ly93d3cuZ251Lm9yZy9saWNlbnNlcy8+LlxuICpcbiAqIEluIGFjY29yZGFuY2Ugd2l0aCBTZWN0aW9uIDcoYikgb2YgdGhlIEdOVSBBZmZlcm8gR2VuZXJhbCBQdWJsaWMgTGljZW5zZVxuICogdmVyc2lvbiAzLCB0aGVzZSBBcHByb3ByaWF0ZSBMZWdhbCBOb3RpY2VzIG11c3QgcmV0YWluIHRoZSBkaXNwbGF5IG9mIHRoZVxuICogXCJTdXBlcmNoYXJnZWQgYnkgU3VpdGVDUk1cIiBsb2dvLiBJZiB0aGUgZGlzcGxheSBvZiB0aGUgbG9nb3MgaXMgbm90IHJlYXNvbmFibHlcbiAqIGZlYXNpYmxlIGZvciB0ZWNobmljYWwgcmVhc29ucywgdGhlIEFwcHJvcHJpYXRlIExlZ2FsIE5vdGljZXMgbXVzdCBkaXNwbGF5XG4gKiB0aGUgd29yZHMgXCJTdXBlcmNoYXJnZWQgYnkgU3VpdGVDUk1cIi5cbiAqL1xuXG5pbXBvcnQge1R5cGV9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHtSZWdpc3RyeUludGVyZmFjZX0gZnJvbSBcIi4uL2NvbXBvbmVudHMvcmVnaXN0cnkvYmFzZS1jb21wb25lbnQucmVnaXN0cnlcIjtcbmltcG9ydCB7T3ZlcnJpZGFibGVNYXB9IGZyb20gXCIuLi90eXBlcy9vdmVycmlkYWJsZS1tYXBcIjtcblxuZXhwb3J0IGFic3RyYWN0IGNsYXNzIEJhc2VUeXBlUmVnaXN0cnk8VD4gaW1wbGVtZW50cyBSZWdpc3RyeUludGVyZmFjZTxUPiB7XG4gICAgcHJvdGVjdGVkIG1hcDogT3ZlcnJpZGFibGVNYXA8VHlwZTxUPj47XG5cbiAgICBwcm90ZWN0ZWQgY29uc3RydWN0b3IoKSB7XG4gICAgICAgIHRoaXMuaW5pdCgpO1xuICAgIH1cblxuICAgIHB1YmxpYyBnZXRLZXkobW9kdWxlOiBzdHJpbmcsIHR5cGU6IHN0cmluZyk6IHN0cmluZyB7XG4gICAgICAgIHJldHVybiB0eXBlO1xuICAgIH1cblxuICAgIHB1YmxpYyByZWdpc3Rlcihtb2R1bGU6IHN0cmluZywgdHlwZTogc3RyaW5nLCBvYmplY3RUeXBlOiBUeXBlPFQ+KTogdm9pZCB7XG4gICAgICAgIHRoaXMubWFwLmFkZEVudHJ5KG1vZHVsZSwgdGhpcy5nZXRLZXkobW9kdWxlLCB0eXBlKSwgb2JqZWN0VHlwZSk7XG4gICAgfVxuXG4gICAgcHVibGljIGV4Y2x1ZGUobW9kdWxlOiBzdHJpbmcsIGtleTogc3RyaW5nKTogdm9pZCB7XG4gICAgICAgIHRoaXMubWFwLmV4Y2x1ZGVFbnRyeShtb2R1bGUsIGtleSk7XG4gICAgfVxuXG4gICAgcHVibGljIGdldChtb2R1bGU6IHN0cmluZywgdHlwZTogc3RyaW5nKTogVHlwZTxUPiB7XG4gICAgICAgIGNvbnN0IG9iamVjdFR5cGVzID0gdGhpcy5tYXAuZ2V0R3JvdXBFbnRyaWVzKG1vZHVsZSk7XG5cbiAgICAgICAgbGV0IGtleSA9IHRoaXMuZ2V0S2V5KG1vZHVsZSwgdHlwZSk7XG4gICAgICAgIGlmIChvYmplY3RUeXBlc1trZXldKSB7XG4gICAgICAgICAgICByZXR1cm4gb2JqZWN0VHlwZXNba2V5XTtcbiAgICAgICAgfVxuXG4gICAgICAgIGlmIChvYmplY3RUeXBlc1snZGVmYXVsdCddKSB7XG4gICAgICAgICAgICByZXR1cm4gb2JqZWN0VHlwZXNbJ2RlZmF1bHQnXTtcbiAgICAgICAgfVxuXG4gICAgICAgIHJldHVybiBudWxsO1xuICAgIH1cblxuICAgIHB1YmxpYyBoYXMobW9kdWxlOiBzdHJpbmcsIHR5cGU6IHN0cmluZyk6IGJvb2xlYW4ge1xuXG4gICAgICAgIGNvbnN0IG9iamVjdFR5cGVzID0gdGhpcy5tYXAuZ2V0R3JvdXBFbnRyaWVzKG1vZHVsZSk7XG5cbiAgICAgICAgY29uc3Qga2V5ID0gdGhpcy5nZXRLZXkobW9kdWxlLCB0eXBlKTtcbiAgICAgICAgcmV0dXJuICEhb2JqZWN0VHlwZXNba2V5XTtcbiAgICB9XG5cbiAgICBwcm90ZWN0ZWQgaW5pdCgpOiB2b2lkIHtcbiAgICAgICAgdGhpcy5tYXAgPSBuZXcgT3ZlcnJpZGFibGVNYXA8VHlwZTxUPj4oKTtcblxuICAgICAgICB0aGlzLmluaXREZWZhdWx0KCk7XG4gICAgfVxuXG4gICAgcHJvdGVjdGVkIGluaXREZWZhdWx0KCk6IHZvaWQge1xuICAgIH1cbn1cbiJdfQ==

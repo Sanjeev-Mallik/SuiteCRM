@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'org\\bovigo\\vfs\\' => array($vendorDir . '/mikey179/vfsstream/src/main/php'),
     'Zend_Xml' => array($vendorDir . '/zf1/zend-xml/library'),
     'Zend_Version' => array($vendorDir . '/zf1/zend-version/library'),
     'Zend_Validate' => array($vendorDir . '/zf1/zend-validate/library'),
@@ -23,4 +24,5 @@ return array(
     'Pimple' => array($vendorDir . '/pimple/pimple/src'),
     'JShrink' => array($vendorDir . '/tedivm/jshrink/src'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
+    'Behat\\Gherkin' => array($vendorDir . '/behat/gherkin/src'),
 );

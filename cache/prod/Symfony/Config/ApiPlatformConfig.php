@@ -639,22 +639,11 @@ class ApiPlatformConfig implements \Symfony\Component\Config\Builder\ConfigBuild
     }
 
     /**
-     * @template TValue
-     * @param TValue $value
-     * @default {"enabled":false}
-     * @return \Symfony\Config\ApiPlatform\MakerConfig|$this
-     * @psalm-return (TValue is array ? \Symfony\Config\ApiPlatform\MakerConfig : static)
-     */
-    public function maker(array $value = []): \Symfony\Config\ApiPlatform\MakerConfig|static
+     * @default {"enabled":true}
+    */
+    public function maker(array $value = []): \Symfony\Config\ApiPlatform\MakerConfig
     {
-        if (!\is_array($value)) {
-            $this->_usedProperties['maker'] = true;
-            $this->maker = $value;
-
-            return $this;
-        }
-
-        if (!$this->maker instanceof \Symfony\Config\ApiPlatform\MakerConfig) {
+        if (null === $this->maker) {
             $this->_usedProperties['maker'] = true;
             $this->maker = new \Symfony\Config\ApiPlatform\MakerConfig($value);
         } elseif (0 < \func_num_args()) {
@@ -1045,7 +1034,7 @@ class ApiPlatformConfig implements \Symfony\Component\Config\Builder\ConfigBuild
 
         if (array_key_exists('maker', $value)) {
             $this->_usedProperties['maker'] = true;
-            $this->maker = \is_array($value['maker']) ? new \Symfony\Config\ApiPlatform\MakerConfig($value['maker']) : $value['maker'];
+            $this->maker = new \Symfony\Config\ApiPlatform\MakerConfig($value['maker']);
             unset($value['maker']);
         }
 
@@ -1208,7 +1197,7 @@ class ApiPlatformConfig implements \Symfony\Component\Config\Builder\ConfigBuild
             $output['openapi'] = $this->openapi->toArray();
         }
         if (isset($this->_usedProperties['maker'])) {
-            $output['maker'] = $this->maker instanceof \Symfony\Config\ApiPlatform\MakerConfig ? $this->maker->toArray() : $this->maker;
+            $output['maker'] = $this->maker->toArray();
         }
         if (isset($this->_usedProperties['exceptionToStatus'])) {
             $output['exception_to_status'] = $this->exceptionToStatus;
